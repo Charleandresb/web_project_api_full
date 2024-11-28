@@ -1,0 +1,103 @@
+.photo-cards {
+  display: grid;
+  grid-template-columns: 282px 282px 282px;
+  grid-template-rows: auto;
+  justify-content: space-between;
+  row-gap: 17px;
+  width: 880px;
+  height: auto;
+  margin: 0 auto;
+  padding: 50px 0 0;
+}
+
+@media screen and (max-width: 900px) {
+  .photo-cards {
+    width: 600px;
+    grid-template-columns: 282px 282px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .photo-cards {
+    width: 282px;
+    grid-template-columns: 282px;
+  }
+}
+
+.card {
+  width: 282px;
+  height: 361px;
+  background-image: url(../images/Rect.png);
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  transition: all 200ms ease-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card__title {
+  color: black;
+  font-size: 24px;
+  line-height: 29.05px;
+  font-weight: 900;
+  position: absolute;
+  margin: 307px auto 26px 21px;
+  max-width: 226px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__image-trash {
+  width: 18px;
+  height: 19.3px;
+  position: absolute;
+  margin: 18px 15px 323px 249px;
+  cursor: pointer;
+}
+
+.card__image-trash:hover {
+  opacity: 0.5;
+}
+
+.card__image-trash_hidden {
+  display: none;
+}
+
+.card__image-like {
+  width: 21px;
+  height: 19px;
+  position: absolute;
+  margin: 305px 18px 30px 243px;
+  cursor: pointer;
+}
+
+.card__image-like:hover {
+  opacity: 0.5;
+}
+
+.card__image-like_active {
+  width: 21px;
+  height: 19px;
+  position: absolute;
+  background-image: url(../images/Likecolor.png);
+  margin: 305px 18px 30px 243px;
+  cursor: pointer;
+}
+
+.card__like-number {
+  position: relative;
+  left: 89%;
+  top: 11%;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.card__image {
+  width: 282px;
+  height: 282px;
+  object-fit: cover;
+  cursor: pointer;
+}

@@ -1,0 +1,92 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 40px 0 0;
+  width: 880px;
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    width: 760px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .header {
+    width: 370px;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .header {
+    width: 320px;
+  }
+}
+
+.header__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  max-width: 173px;
+  width: 100%;
+}
+
+@media screen and (max-width: 620px) {
+  .header__logo {
+    max-width: 126px;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .header__logo {
+    margin: 0 0 0 27px;
+  }
+}
+
+.header__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header__logout {
+  color: white;
+  cursor: pointer;
+  margin: 0 0 0 25px;
+}
+
+.header__email {
+  color: white;
+  margin: 0;
+}
+
+.header__register {
+  color: white;
+  cursor: pointer;
+}
+
+.header__login {
+  color: white;
+  cursor: pointer;
+}
+
+.header__line {
+  max-width: 880px;
+  width: 100%;
+  margin: 41px 0 0;
+}
