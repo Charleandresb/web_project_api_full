@@ -10,7 +10,7 @@ export default function generateToken(user) {
       email: user.email,
     },
     secretKey,
-    { expiresIn: "1h" }
+    { expiresIn: "7d" }
   );
   return token;
 }

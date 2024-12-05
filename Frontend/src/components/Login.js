@@ -54,7 +54,11 @@ function Login({ setLoggedIn }) {
         <button className="login__button" type="submit">
           Iniciar sesión
         </button>
-        {error && <p className="login__error-message">Usuario no encontrado</p>}
+        {error && (
+          <p className="login__error-message">
+            Correo o contraseña incorrectos
+          </p>
+        )}
         <Link to="/register" className="login__login-link">
           ¿Aún no eres miembro? Regístrate aquí
         </Link>

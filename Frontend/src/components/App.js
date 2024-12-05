@@ -37,13 +37,15 @@ function App() {
       const token = localStorage.getItem("jwt");
       if (token) {
         const response = await checkToken(token);
+        console.log(response);
         if (response.error) {
           localStorage.removeItem("jwt");
           navigate("/login");
         }
-        if (response.data.email) {
+        if (response.email) {
+          //ver si la respuesta viene en un obajeto data o no
           setLoggedIn(true);
-          setEmail(response.data.email);
+          setEmail(response.email);
           navigate("/");
         }
         return;

@@ -1,58 +1,49 @@
 import Card from "../models/cards.js";
+import NotFoundError from "../errors/not-found-error.js";
+import NotReqError from "../errors/not-req-error.js";
 
-export async function getCards(req, res) {
+export async function getCards(req, res, next) {
   await Card.find({})
     .orFail(() => {
-      const error = new Error("No se ha encontrado la lista de cartas");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado la lista de cartas");
     })
     .then((cards) => {
       res.send(cards);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
 
-export async function createCard(req, res) {
+export async function createCard(req, res, next) {
   const { name, link } = req.body;
   const { userId } = req.user;
 
-  await Card.create({
-    name,
-    link,
-    owner: userId,
-  })
-    .then((newCard) => {
-      res.send(newCard);
-    })
-    .catch((error) => {
-      console.log(error);
-      res
-        .status(400)
-        .send({ message: "No se ha creado la carta por datos inválidos" });
+  try {
+    const newCard = await Card.create({
+      name,
+      link,
+      owner: userId,
     });
+    if (!newCard) {
+      throw new NotReqError("Datos ingresados incorrectos");
+    }
+    res.status(201).send({ newCard: newCard });
+  } catch (error) {
+    next(error);
+  }
 }
 
-export async function deleteCardById(req, res) {
+export async function deleteCardById(req, res, next) {
   await Card.findByIdAndRemove(req.params.id)
     .orFail(() => {
-      const error = new Error("No se ha encontrado ninguna carta con esa id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado ninguna carta con esa id");
     })
     .then((deletedCard) => {
       res.send(deletedCard);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
 
-export async function likeCard(req, res) {
+export async function likeCard(req, res, next) {
   const { userId } = req.user;
 
   await Card.findByIdAndUpdate(
@@ -61,20 +52,15 @@ export async function likeCard(req, res) {
     { new: true }
   )
     .orFail(() => {
-      const error = new Error("No se ha encontrado ninguna carta con esa id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado ninguna carta con esa id");
     })
     .then((likedCard) => {
       res.send(likedCard);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
 
-export async function dislikeCard(req, res) {
+export async function dislikeCard(req, res, next) {
   const { userId } = req.user;
 
   await Card.findByIdAndUpdate(
@@ -83,15 +69,10 @@ export async function dislikeCard(req, res) {
     { new: true }
   )
     .orFail(() => {
-      const error = new Error("No se ha encontrado ninguna carta con esa id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado ninguna carta con esa id");
     })
     .then((dislikedCard) => {
       res.send(dislikedCard);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }

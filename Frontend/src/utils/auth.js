@@ -1,7 +1,8 @@
-const BASE_URL = "https://se-register-api.en.tripleten-services.com/v1";
+//const BASE_URL = "https://se-register-api.en.tripleten-services.com/v1";
+const MY_BACKEND = "http://localhost:3000";
 
 export async function register(email, password) {
-  const response = await fetch(`${BASE_URL}/signup`, {
+  const response = await fetch(`${MY_BACKEND}/users/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +21,7 @@ export async function register(email, password) {
 }
 
 export async function login(email, password) {
-  const response = await fetch(`${BASE_URL}/signin`, {
+  const response = await fetch(`${MY_BACKEND}/users/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +41,7 @@ export async function login(email, password) {
 }
 
 export async function checkToken(token) {
-  const response = await fetch(`${BASE_URL}/users/me`, {
+  const response = await fetch(`${MY_BACKEND}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

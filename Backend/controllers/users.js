@@ -1,78 +1,79 @@
 import User from "../models/users.js";
 import generateToken from "../helper/generateToken.js";
+import NotFoundError from "../errors/not-found-error.js";
+import NotReqError from "../errors/not-req-error.js";
+import bcrypt from "bcryptjs";
 
-export async function getUsers(req, res) {
+export async function getUsers(req, res, next) {
   await User.find({})
     .orFail(() => {
-      const error = new Error("No se ha encontrado la lista de usuarios");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado la lista de usuarios");
     })
     .then((users) => {
       res.send(users);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
 
-export async function getUserById(req, res) {
+export async function getUserById(req, res, next) {
   await User.findById(req.params.id)
     .orFail(() => {
-      const error = new Error("No se ha encontrado ningún usuario con esa id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado ningún usuario con esa id");
     })
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
 
-export async function getUserInfo(req, res) {
+export async function getUserInfo(req, res, next) {
   const { userId } = req.user;
   console.log(userId);
-  const user = await User.findById(userId);
-  res.send(user);
-}
 
-export async function createUser(req, res) {
-  const { email, password } = req.body;
-
-  await User.create({
-    email,
-    password,
-  })
-    .then((newUser) => {
-      res.send(newUser);
-    })
-    .catch((error) => {
-      console.log(error);
-      res
-        .status(400)
-        .send({ message: "No se ha creado el usuario por datos inválidos" });
-    });
-}
-
-export async function loginUser(req, res) {
-  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email, password });
-    if (user === null) {
-      return res.status(404).send("usuario no encontrado");
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new NotFoundError("No se ha encontrado ningún usuario con esa id");
     }
-    const token = generateToken(user);
-    res.send({ token });
+    res.send(user);
   } catch (error) {
-    res.status(500).send("Algo salió mal");
+    next(error);
   }
 }
 
-export async function editProfile(req, res) {
+export async function createUser(req, res, next) {
+  const { email, password } = req.body;
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      email: email,
+      password: hash,
+    });
+    if (!hash || !newUser) {
+      throw new NotReqError("No se ha creado el usuario por datos inválidos");
+    }
+    res.status(201).send({ _id: newUser._id, email: newUser.email });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function loginUser(req, res, next) {
+  const { email, password } = req.body;
+
+  return await User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = generateToken(user); //Por qué podría fallar?
+      res.send({ token });
+    })
+    .catch(next);
+
+  // .catch((error) => {
+  //   res.status(401).send({ message: error.message });
+  // });
+}
+
+export async function editProfile(req, res, next) {
   const { name, about } = req.body;
   const { userId } = req.user;
 
@@ -81,20 +82,15 @@ export async function editProfile(req, res) {
     about,
   })
     .orFail(() => {
-      const error = new Error("No se ha encontrado ningún usuario con esa id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado ningún usuario con esa id");
     })
     .then((newUserProfile) => {
       res.send(newUserProfile);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
 
-export async function editAvatar(req, res) {
+export async function editAvatar(req, res, next) {
   const { avatar } = req.body;
   const { userId } = req.user;
 
@@ -102,15 +98,10 @@ export async function editAvatar(req, res) {
     avatar,
   })
     .orFail(() => {
-      const error = new Error("No se ha encontrado ningún usuario con esa id");
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError("No se ha encontrado ningún usuario con esa id");
     })
-    .then((newUserAvatar) => {
-      res.send(newUserAvatar);
+    .then((newAvatar) => {
+      res.send(newAvatar);
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(error.statusCode).send({ message: error.message });
-    });
+    .catch(next);
 }
