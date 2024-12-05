@@ -81,3 +81,9 @@ alguna sugerencia de como hacerlo.
 
 Solución:
 MongoDB Atlas, netwwork access 0.0.0.0/0 (IP Global)
+
+env:
+
+DIREC_AROUND_MONGODB_ATLAS="mongodb+srv://charlesb:50lD0mil%40@cluster0.t5jkb.mongodb.net/aroundb?retryWrites=true&w=majority&appName=Cluster0"
+
+SECRET_KEY="227e1fc3185ce3033f7d10209412fb64194b2831fe7eb92c5dfd970168c24722"
