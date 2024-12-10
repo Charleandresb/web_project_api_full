@@ -27,8 +27,8 @@ router.post(
 
 router.delete("/:id", deleteCardById);
 
-router.put("/:cardId/likes", likeCard);
+router.put("/likes/:cardId", likeCard);
 
-router.delete("/:cardId/likes", dislikeCard);
+router.delete("/likes/:cardId", dislikeCard);
 
 export default router;

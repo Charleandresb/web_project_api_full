@@ -4,10 +4,27 @@ class Api {
     this.headers = options.headers;
   }
 
-  getInitialCards() {
-    return fetch(`${this.baseUrl}/cards`, {
-      headers: this.headers,
-    })
+  makeFetch(url, method = "GET", body = {}) {
+    let request;
+    if (method === "GET" || method === "PUT" || method === "DELETE") {
+      request = fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}` || "",
+        },
+      });
+    } else {
+      request = fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}` || "",
+        },
+        body: JSON.stringify(body),
+      });
+    }
+    return request
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -20,113 +37,40 @@ class Api {
       });
   }
 
-  getUserInfo() {
-    return fetch(`${this.baseUrl}/users/me`, {
-      headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  getInitialCards() {
+    return this.makeFetch(`${this.baseUrl}/cards`);
   }
 
   editProfile(data) {
-    return fetch(`${this.baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: this.headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    return this.makeFetch(`${this.baseUrl}/users/me`, "PATCH", {
+      name: data.name,
+      about: data.about,
+    });
+  }
 
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  editAvatar(data) {
+    return this.makeFetch(`${this.baseUrl}/users/me/avatar`, "PATCH", {
+      avatar: data.avatar,
+    });
   }
 
   addCard(data) {
-    return fetch(`${this.baseUrl}/cards`, {
-      method: "POST",
-      headers: this.headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return this.makeFetch(`${this.baseUrl}/cards`, "POST", {
+      name: data.name,
+      link: data.link,
+    });
   }
 
   removeCard(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return this.makeFetch(`${this.baseUrl}/cards/${cardId}`, "DELETE");
   }
 
   addLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
-      method: "PUT",
-      headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return this.makeFetch(`${this.baseUrl}/cards/likes/${cardId}`, "PUT");
   }
 
   removeLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return this.makeFetch(`${this.baseUrl}/cards/likes/${cardId}`, "DELETE");
   }
 
   changeLikeCardStatus(cardId, isLiked) {
@@ -136,32 +80,12 @@ class Api {
       return this.addLike(cardId);
     }
   }
-
-  editAvatar(data) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this.headers,
-      body: JSON.stringify({
-        avatar: data.avatar,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 }
 
 const api = new Api({
   baseUrl: process.env.REACT_APP_API_BASE_URL,
   headers: {
-    authorization: process.env.REACT_APP_API_TOKEN,
+    authorization: localStorage.getItem("jwt"),
     "Content-Type": "application/json",
   },
 });

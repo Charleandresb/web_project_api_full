@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,6 +12,8 @@ const avatarSchema = yup.object({
 });
 
 export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+  const [buttonText, setButtonText] = useState("Guardar");
+
   const {
     register,
     formState: { errors },
@@ -19,10 +21,17 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     reset,
   } = useForm({ resolver: yupResolver(avatarSchema), mode: "onChange" });
 
-  function handleSubmitAvatar(data) {
-    onUpdateAvatar({ avatar: data.avatar });
+  async function handleSubmitAvatar(data) {
+    setButtonText("Guardando...");
+
+    await onUpdateAvatar({ avatar: data.avatar });
     reset();
   }
+
+  useEffect(() => {
+    setButtonText("Guardar");
+  }, [isOpen]);
+
   return (
     <PopupWithForm
       isOpen={isOpen}
@@ -30,7 +39,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       onSubmit={handleSubmit(handleSubmitAvatar)}
       title="Cambiar foto de perfil"
       name="avatar"
-      buttonText="Guardar"
+      buttonText={buttonText}
       textRequired="Único campo requerido (*)"
     >
       <input

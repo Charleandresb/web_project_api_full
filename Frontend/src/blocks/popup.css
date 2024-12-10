@@ -356,6 +356,12 @@
   z-index: 2;
 }
 
+@media screen and (max-width: 495px) {
+  .infotooltip__container {
+    width: 280px;
+  }
+}
+
 .infotooltip__close-icon {
   width: 21px;
   height: 21px;
@@ -365,9 +371,23 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 495px) {
+  .infotooltip__close-icon {
+    top: -31px;
+    right: 1px;
+  }
+}
+
 .infotooltip__info-icon {
   width: 120px;
   height: 120px;
+}
+
+@media screen and (max-width: 495px) {
+  .infotooltip__info-icon {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .infotooltip__message {
@@ -378,6 +398,12 @@
   max-width: 358px;
   margin: 32px 0 0;
   text-align: center;
+}
+
+@media screen and (max-width: 495px) {
+  .infotooltip__message {
+    font-size: 20px;
+  }
 }
 
 .infotooltip__overlay {

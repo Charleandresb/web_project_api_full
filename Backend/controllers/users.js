@@ -77,10 +77,14 @@ export async function editProfile(req, res, next) {
   const { name, about } = req.body;
   const { userId } = req.user;
 
-  await User.findByIdAndUpdate(userId, {
-    name,
-    about,
-  })
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      name,
+      about,
+    },
+    { returnDocument: "after" }
+  )
     .orFail(() => {
       throw new NotFoundError("No se ha encontrado ningún usuario con esa id");
     })
@@ -94,9 +98,13 @@ export async function editAvatar(req, res, next) {
   const { avatar } = req.body;
   const { userId } = req.user;
 
-  await User.findByIdAndUpdate(userId, {
-    avatar,
-  })
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      avatar,
+    },
+    { returnDocument: "after" } //retorna el documento después
+  )
     .orFail(() => {
       throw new NotFoundError("No se ha encontrado ningún usuario con esa id");
     })

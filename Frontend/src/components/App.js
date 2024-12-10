@@ -46,29 +46,24 @@ function App() {
           //ver si la respuesta viene en un obajeto data o no
           setLoggedIn(true);
           setEmail(response.email);
+          setCurrentUser(response);
           navigate("/");
         }
         return;
       }
     }
-    reviewToken();
-  }, [loggedIn, email, navigate]);
 
-  useEffect(() => {
     async function getCards() {
       const response = await api.getInitialCards();
       setCards(response);
     }
-    getCards();
-  }, []);
 
-  useEffect(() => {
-    async function getUserInfo() {
-      const response = await api.getUserInfo();
-      setCurrentUser(response);
+    reviewToken();
+
+    if (loggedIn) {
+      getCards();
     }
-    getUserInfo();
-  }, []);
+  }, [loggedIn, email, navigate]);
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -110,7 +105,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
@@ -124,7 +119,7 @@ function App() {
   }
 
   function handleAddPlace(data) {
-    api.addCard(data).then((newCard) => {
+    api.addCard(data).then(({ newCard }) => {
       setCards([newCard, ...cards]);
       closeAllPopups();
     });
@@ -151,7 +146,11 @@ function App() {
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header email={email} />
+        <Header
+          email={email}
+          setLoggedIn={setLoggedIn}
+          setCurrentUser={setCurrentUser}
+        />
         <Routes>
           <Route
             path="/"
@@ -209,7 +208,15 @@ function App() {
             }
           />
 
-          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                setLoggedIn={setLoggedIn}
+                setCurrentUser={setCurrentUser}
+              />
+            }
+          />
         </Routes>
         {isSuccesRegisterPopupOpen ? (
           <SuccesRegister onClose={handleCloseSuccesRegister} />

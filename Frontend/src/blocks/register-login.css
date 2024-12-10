@@ -12,11 +12,23 @@
   width: 100%;
 }
 
+@media screen and (max-width: 375px) {
+  .register__form {
+    max-width: 280px;
+  }
+}
+
 .register__title {
   color: white;
   font-weight: 900;
   font-size: 24px;
   margin: 0;
+}
+
+@media screen and (max-width: 375px) {
+  .register__title {
+    font-size: 20px;
+  }
 }
 
 .register__input {
@@ -62,11 +74,23 @@
   width: 100%;
 }
 
+@media screen and (max-width: 375px) {
+  .login__form {
+    max-width: 280px;
+  }
+}
+
 .login__title {
   color: white;
   font-weight: 900;
   font-size: 24px;
   margin: 0;
+}
+
+@media screen and (max-width: 375px) {
+  .login__title {
+    font-size: 20px;
+  }
 }
 
 .login__input {
@@ -100,4 +124,10 @@
 
 .login__error-message {
   color: red;
+}
+
+@media screen and (max-width: 375px) {
+  .login__error-message {
+    font-size: 12px;
+  }
 }

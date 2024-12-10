@@ -30,11 +30,23 @@
   }
 }
 
+@media screen and (max-width: 320px) {
+  .header {
+    max-width: 280px;
+  }
+}
+
 .header__container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 620px) {
+  .header__container {
+    flex-direction: column;
+  }
 }
 
 .header__logo {
@@ -52,22 +64,56 @@
   }
 }
 
-@media screen and (max-width: 385px) {
-  .header__logo {
-    margin: 0 0 0 27px;
-  }
-}
-
 .header__info {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
+@media screen and (max-width: 768px) {
+  .header__info {
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .header__info {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin: 40px 0 0;
+  }
+}
+
 .header__logout {
   color: white;
   cursor: pointer;
   margin: 0 0 0 25px;
+  transition: all 200ms ease-out;
+}
+
+.header__logout:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 768px) {
+  .header__logout {
+    margin: 15px 0 0;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .header__logout {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .header__logout {
+    font-size: 10px;
+  }
 }
 
 .header__email {
@@ -75,18 +121,60 @@
   margin: 0;
 }
 
+@media screen and (max-width: 768px) {
+  .header__email {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .header__email {
+    font-size: 12px;
+  }
+}
+
 .header__register {
   color: white;
   cursor: pointer;
+  margin: 0;
+  transition: all 200ms ease-out;
+}
+
+.header__register:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 425px) {
+  .header__register {
+    font-size: 12px;
+  }
 }
 
 .header__login {
   color: white;
   cursor: pointer;
+  margin: 0;
+  transition: all 200ms ease-out;
+}
+
+.header__login:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 425px) {
+  .header__login {
+    font-size: 12px;
+  }
 }
 
 .header__line {
   max-width: 880px;
   width: 100%;
   margin: 41px 0 0;
+}
+
+@media screen and (max-width: 620px) {
+  .header__line {
+    margin: 12px 0 0;
+  }
 }

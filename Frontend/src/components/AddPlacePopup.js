@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +18,8 @@ const addPlaceSchema = yup.object({
 });
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+  const [buttonText, setButtonText] = useState("Crear");
+
   const {
     register,
     formState: { errors },
@@ -29,10 +31,16 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     mode: "onChange",
   });
 
-  function handleSubmitAddPlace(data) {
-    onAddPlace({ name: data.title, link: data.link });
+  async function handleSubmitAddPlace(data) {
+    setButtonText("Creando...");
+
+    await onAddPlace({ name: data.title, link: data.link });
     reset();
   }
+
+  useEffect(() => {
+    setButtonText("Crear");
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -41,7 +49,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       onSubmit={handleSubmit(handleSubmitAddPlace)}
       title="Nuevo lugar"
       name="add"
-      buttonText="Crear"
+      buttonText={buttonText}
       textRequired="Ambos campos son requeridos (*)"
     >
       <input

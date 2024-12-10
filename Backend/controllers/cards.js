@@ -33,7 +33,7 @@ export async function createCard(req, res, next) {
 }
 
 export async function deleteCardById(req, res, next) {
-  await Card.findByIdAndRemove(req.params.id)
+  await Card.findByIdAndDelete(req.params.id)
     .orFail(() => {
       throw new NotFoundError("No se ha encontrado ninguna carta con esa id");
     })

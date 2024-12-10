@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../utils/auth";
 
 function Login({ setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   function handleChangeEmail(evt) {
     setEmail(evt.target.value);
@@ -21,6 +22,7 @@ function Login({ setLoggedIn }) {
       await login(email, password);
       setError(false);
       setLoggedIn(true);
+      navigate("/");
     } catch (error) {
       setError(true);
       console.error(error);

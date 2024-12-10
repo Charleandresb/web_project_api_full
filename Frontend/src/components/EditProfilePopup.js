@@ -1,6 +1,6 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import escapeHTML from "escape-html";
 import { useForm } from "react-hook-form";
@@ -25,6 +25,7 @@ const profileSchema = yup.object({
 
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
+  const [buttonText, setButtonText] = useState("Guardar");
 
   const {
     register,
@@ -32,12 +33,18 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     handleSubmit,
   } = useForm({ resolver: yupResolver(profileSchema), mode: "onChange" });
 
-  function handleSubmitProfile(data) {
-    onUpdateUser({
+  async function handleSubmitProfile(data) {
+    setButtonText("Guardando...");
+
+    await onUpdateUser({
       name: escapeHTML(data.name),
       about: escapeHTML(data.about),
     });
   }
+
+  useEffect(() => {
+    setButtonText("Guardar");
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -46,7 +53,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       onSubmit={handleSubmit(handleSubmitProfile)}
       title="Editar perfil"
       name="profile"
-      buttonText="Guardar"
+      buttonText={buttonText}
       textRequired="Ambos campos son requeridos (*)"
     >
       <input

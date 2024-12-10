@@ -10,7 +10,8 @@ export default function Header(props) {
 
   function logout() {
     localStorage.removeItem("jwt");
-    navigate("/login");
+    props.setLoggedIn(false);
+    props.setCurrentUser({});
   }
 
   function navRegister() {
