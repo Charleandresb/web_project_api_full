@@ -37,7 +37,6 @@ function App() {
       const token = localStorage.getItem("jwt");
       if (token) {
         const response = await checkToken(token);
-        console.log(response);
         if (response.error) {
           localStorage.removeItem("jwt");
           navigate("/login");
