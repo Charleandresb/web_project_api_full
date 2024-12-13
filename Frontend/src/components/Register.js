@@ -1,6 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from "../utils/auth";
+// import { useForm } from "react-hook-form";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import * as yup from "yup";
+// import validator from "validator";
+
+// const registerSchema = yup.object({
+//   email: yup
+//     .string("Completa este campo")
+//     .email(validator.isEmail(), "Debes ingresar un email")
+//     .required("Introduce un email")
+//     .trim(),
+//   password: yup
+//     .string("Completa este campo")
+//     .required("Introduce una contraseña")
+//     .trim()
+//     .min(8, "La contraseña debe tener mínimo ocho caracteres"),
+// });
 
 function Register(props) {
   const [email, setEmail] = useState("");

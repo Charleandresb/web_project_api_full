@@ -22,7 +22,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "testing": "jest"
+    "testing": "jest",
+    "deploy": "npm run build && scp -r -i ./build/* carlos.arte91@34.168.162.51:/home/carlos.arte91/frontend"
   },
   "eslintConfig": {
     "extends": [

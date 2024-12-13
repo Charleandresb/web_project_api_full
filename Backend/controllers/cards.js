@@ -4,6 +4,7 @@ import NotReqError from "../errors/not-req-error.js";
 
 export async function getCards(req, res, next) {
   await Card.find({})
+    .sort({ createdAt: -1 }) //Orden de tarjetas prepend
     .orFail(() => {
       throw new NotFoundError("No se ha encontrado la lista de cartas");
     })
