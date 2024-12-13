@@ -1,4 +1,4 @@
-const MY_BACKEND = "http://localhost:3000";
+const MY_BACKEND = process.env.REACT_APP_API_BASE_URL;
 
 export async function register(email, password) {
   const response = await fetch(`${MY_BACKEND}/users/signup`, {

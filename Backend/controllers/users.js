@@ -63,14 +63,10 @@ export async function loginUser(req, res, next) {
 
   return await User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = generateToken(user); //Por qué podría fallar?
+      const token = generateToken(user);
       res.send({ token });
     })
     .catch(next);
-
-  // .catch((error) => {
-  //   res.status(401).send({ message: error.message });
-  // });
 }
 
 export async function editProfile(req, res, next) {
