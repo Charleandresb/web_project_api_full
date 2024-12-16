@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 282px 282px 282px;
   grid-template-rows: auto;
-  justify-content: space-between;
   row-gap: 17px;
+  column-gap: 17px;
   width: 880px;
   height: auto;
   margin: 0 auto;
@@ -31,6 +31,7 @@
   overflow: hidden;
   border-radius: 10px 10px 0 0;
   transition: all 200ms ease-out;
+  position: relative;
 }
 
 .card:hover {
@@ -43,7 +44,9 @@
   line-height: 29.05px;
   font-weight: 900;
   position: absolute;
-  margin: 307px auto 26px 21px;
+  margin: 0;
+  top: 85%;
+  left: 6%;
   max-width: 226px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -70,7 +73,10 @@
   width: 21px;
   height: 19px;
   position: absolute;
-  margin: 305px 18px 30px 243px;
+  margin: 0;
+  top: 85%;
+  left: 86%;
+  background-image: url(../images/Like.svg);
   cursor: pointer;
 }
 
@@ -83,7 +89,9 @@
   height: 19px;
   position: absolute;
   background-image: url(../images/Likecolor.png);
-  margin: 305px 18px 30px 243px;
+  margin: 0;
+  top: 85%;
+  left: 86%;
   cursor: pointer;
 }
 

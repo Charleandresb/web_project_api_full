@@ -77,6 +77,13 @@
   transition: all 500ms ease-out;
 }
 
+@media screen and (max-width: 768px) {
+  .profile__avatar-edit {
+    width: 100px;
+    height: 100px;
+  }
+}
+
 .profile__avatar-edit:hover {
   opacity: 1;
 }

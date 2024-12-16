@@ -185,7 +185,7 @@ function App() {
                   />
 
                   <ImagePopup
-                    title={selectedCard.title}
+                    title={selectedCard.name}
                     link={selectedCard.link}
                     isOpen={isImagePopupOpen}
                     onClose={closeAllPopups}

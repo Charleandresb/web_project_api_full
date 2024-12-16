@@ -1,4 +1,3 @@
-import like from "../images/Like.svg";
 import trash from "../images/Trash.svg";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useContext } from "react";
@@ -12,6 +11,7 @@ export default function Card({
   onCardDelete,
   card,
 }) {
+  console.log(card);
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner === currentUser._id;
@@ -39,12 +39,11 @@ export default function Card({
   return (
     <div className="card">
       <h2 className="card__title">{name}</h2>
-      <img
-        src={like}
+      <div
         alt="Me gusta"
         className={cardLikeButtonClassName}
         onClick={handleLikeClick}
-      />
+      ></div>
       <img
         src={trash}
         alt="Eliminar"
