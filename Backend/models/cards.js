@@ -36,3 +36,5 @@ const cardSchema = mongoose.Schema({
 
 const Card = mongoose.model("card", cardSchema);
 export default Card;
+
+// \b(https?):\/\/(www\.)?[A-Za-z0-9.\-_~:/?%#[\]@!$&'()*+,;=]+\b (regex url images)

@@ -201,6 +201,7 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: -1;
+  backdrop-filter: blur(10px);
 }
 
 .popup-image {
@@ -276,6 +277,7 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: -5;
+  backdrop-filter: blur(10px);
 }
 
 .popup-remove {
@@ -377,6 +379,7 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: -1;
+  backdrop-filter: blur(10px);
 }
 
 .infotooltip {
@@ -456,4 +459,5 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 1;
+  backdrop-filter: blur(10px);
 }

@@ -49,6 +49,7 @@ export default function Main(props) {
       </section>
 
       <section className="photo-cards">
+        {/* la función flecha retorna el valor que se pasa entre parentesis //si se pasa entre llaves se debe especificar qué valor retornar */}
         {props.cards.map((card) => (
           <Card
             key={card._id}

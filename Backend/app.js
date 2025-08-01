@@ -14,15 +14,7 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = [
-  "https://aroundnat.jumpingcrab.com",
-  "http://aroundnat.jumpingcrab.com",
-  "https://www.aroundnat.jumpingcrab.com",
-  "http://www.aroundnat.jumpingcrab.com",
-  "https://api.aroundnat.jumpingcrab.com",
-  "http://api.aroundnat.jumpingcrab.com",
-  "http://localhost:4000",
-];
+const allowedCors = ["http://localhost:4000"];
 
 app.use(function (req, res, next) {
   const { origin } = req.headers;
