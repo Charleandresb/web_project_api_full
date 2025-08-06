@@ -14,7 +14,7 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = ["http://localhost:4000"];
+const allowedCors = ["http://localhost:4000", "200.83.23.180"];
 
 app.use(function (req, res, next) {
   const { origin } = req.headers;
