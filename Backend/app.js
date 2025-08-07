@@ -14,7 +14,12 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = ["http://localhost:4000", "200.83.23.180"];
+const allowedCors = [
+  "http://localhost:4000",
+  "200.83.23.180",
+  "http://200.83.23.180",
+  "https://aroundnatapi.vercel.app",
+];
 
 app.use(function (req, res, next) {
   const { origin } = req.headers;
@@ -90,10 +95,7 @@ app.use((err, req, res, next) => {
   console.log(err);
   const { statusCode = 500, message } = err;
 
-  res.status(statusCode).send({
-    message:
-      statusCode === 500 ? "Ha ocurrido un error en el servidor" : message,
-  });
+  res.status(statusCode).send({ message: message });
 });
 
 app.listen(PORT, () => {
