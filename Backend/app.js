@@ -44,7 +44,10 @@ app.use(function (req, res, next) {
 });
 
 mongoose
-  .connect(process.env.DIREC_AROUND_MONGODB_ATLAS)
+  .connect(process.env.DIREC_AROUND_MONGODB_ATLAS, {
+    bufferTimeoutMS: 30000,
+    serverSelectionTimeoutMS: 30000,
+  })
   .then(() => {
     console.log("Conectado a la base de datos");
   })
@@ -102,3 +105,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
 });
+
+module.exports = app;
