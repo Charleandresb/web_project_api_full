@@ -45,7 +45,6 @@ app.use(function (req, res, next) {
 
 mongoose
   .connect(process.env.DIREC_AROUND_MONGODB_ATLAS, {
-    bufferTimeoutMS: 30000,
     serverSelectionTimeoutMS: 30000,
   })
   .then(() => {
